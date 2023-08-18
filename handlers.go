@@ -28,3 +28,15 @@ func formHandler(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintf(w, "Name = %s\n", name)
 	fmt.Fprintf(w, "Address= %s\n", address)
 }
+
+func getMovies(w http.ResponseWriter, r *http.Request) {
+	res, err := db.GetMovies()
+	if err != nil {
+		http.Error(w, "", http.StatusBadRequest)
+
+		return
+	}
+
+	fmt.Fprintf(w, res)
+
+}
