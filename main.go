@@ -26,18 +26,19 @@ func main() {
 	fmt.Println("Migrated")
 	/*
 		todo := Todo{
-			Title:       "Complete Postgres integration",
-			Description: "add full CRUD implementation",
+			Title:       "test HTMX integration",
+			Description: "implement various HTMX handlers",
 			Status:      "Not_Complete",
 		}
 
-		result, err := CreateTodo(db, todo)
-		if err != nil {
-			log.Panic(err)
-			return
-		}
-		fmt.Println("Todo Created", result)
-	*/
+		for i := 0; i < 10; i++ {
+			result, err := CreateTodo(db, todo)
+			if err != nil {
+				log.Panic(err)
+				return
+			}
+			fmt.Println("Todo Created", result)
+		}*/
 	todoArr := RetrieveAll(db)
 	id := todoArr[1].ID.String()
 	//id := idu.String()
@@ -70,12 +71,26 @@ func main() {
 		tmpl.Execute(w, films)
 	}
 
+	// handler function #2 - returns the template block with the newly added film, as an HTMX response
+	h2 := func(w http.ResponseWriter, r *http.Request) {
+		title := r.PostFormValue("title")
+		director := r.PostFormValue("director")
+		// htmlStr := fmt.Sprintf("<li class='list-group-item bg-primary text-white'>%s - %s</li>", title, director)
+		// tmpl, _ := template.New("t").Parse(htmlStr)
+		tmpl := template.Must(template.ParseFiles("index.html"))
+		new_todo := Todo{Title: title, Description: director, Status: "Not_Complete"}
+		add_todo, _ := CreateTodo(db, new_todo)
+		println("lines modified: ", add_todo)
+		tmpl.ExecuteTemplate(w, "film-list-element", new_todo)
+	}
+
 	//fileserver := http.FileServer(http.Dir("./static"))
 
 	//http.Handle("/", fileserver)
 	http.HandleFunc("/form", formHandler)
 	http.HandleFunc("/hello", helloHandler)
 	http.HandleFunc("/template", h1)
+	http.HandleFunc("/add-film/", h2)
 
 	fmt.Printf("Starting server at port 8080\n")
 	if err := http.ListenAndServe(":8080", nil); err != nil {
