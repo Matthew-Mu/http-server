@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"html/template"
 	"net/http"
 )
 
@@ -27,4 +28,14 @@ func formHandler(w http.ResponseWriter, r *http.Request) {
 	address := r.FormValue("address")
 	fmt.Fprintf(w, "Name = %s\n", name)
 	fmt.Fprintf(w, "Address= %s\n", address)
+}
+
+func TemplateHandler(w http.ResponseWriter, r *http.Request, todo_list []Todo) {
+	tmpl := template.Must(template.ParseFiles("template.html"))
+	todos := map[string][]Todo{
+		"Todos": todo_list,
+	}
+	println("accessing template")
+	tmpl.Execute(w, todos)
+
 }

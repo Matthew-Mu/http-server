@@ -2,9 +2,15 @@ package main
 
 import (
 	"fmt"
+	"html/template"
 	"log"
 	"net/http"
 )
+
+type Film struct {
+	Title    string
+	Director string
+}
 
 func main() {
 	//connect to postgresql
@@ -52,14 +58,24 @@ func main() {
 	fmt.Println("Your payment is", payment)
 
 	// delete a payment with previous id
-	DeleteTodo(db, id)
-	fmt.Println("Your payment now is deleted")
+	//DeleteTodo(db, id)
+	//fmt.Println("Your payment now is deleted")
 
-	fileserver := http.FileServer(http.Dir("./static"))
+	// handler function #1 - returns the index.html template, with film data
+	h1 := func(w http.ResponseWriter, r *http.Request) {
+		tmpl := template.Must(template.ParseFiles("index.html"))
+		films := map[string][]Todo{
+			"Todos": todoArr,
+		}
+		tmpl.Execute(w, films)
+	}
 
-	http.Handle("/", fileserver)
+	//fileserver := http.FileServer(http.Dir("./static"))
+
+	//http.Handle("/", fileserver)
 	http.HandleFunc("/form", formHandler)
 	http.HandleFunc("/hello", helloHandler)
+	http.HandleFunc("/template", h1)
 
 	fmt.Printf("Starting server at port 8080\n")
 	if err := http.ListenAndServe(":8080", nil); err != nil {
