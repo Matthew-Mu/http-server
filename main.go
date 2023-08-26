@@ -46,15 +46,15 @@ func main() {
 	//fmt.Println("Input status: ")
 	//fmt.Scanln(&id)
 	/*
-		retrievedTodo, _ := SelectPaymentWIthId(db, id)
-		fmt.Println("Your TODO is \n", retrievedTodo.Title)
+			retrievedTodo, _ := SelectPaymentWIthId(db, id)
+			fmt.Println("Your TODO is \n", retrievedTodo.Title)
+
+		updatedTodo, _ := UpdateTodo(db, id, Todo{
+			Status: "Complete",
+		})
+
+		fmt.Println("STATUS = ", updatedTodo)
 	*/
-	updatedTodo, _ := UpdateTodo(db, id, Todo{
-		Status: "Complete",
-	})
-
-	fmt.Println("STATUS = ", updatedTodo)
-
 	payment, _ := SelectPaymentWIthId(db, id)
 	fmt.Println("Your payment is", payment)
 
@@ -84,9 +84,9 @@ func main() {
 		tmpl.ExecuteTemplate(w, "film-list-element", new_todo)
 	}
 
-	//fileserver := http.FileServer(http.Dir("./static"))
+	fileserver := http.FileServer(http.Dir("./static"))
 
-	//http.Handle("/", fileserver)
+	http.Handle("/", fileserver)
 	http.HandleFunc("/form", formHandler)
 	http.HandleFunc("/hello", helloHandler)
 	http.HandleFunc("/template", h1)
