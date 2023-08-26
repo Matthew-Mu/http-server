@@ -40,7 +40,7 @@ func main() {
 			fmt.Println("Todo Created", result)
 		}*/
 	todoArr := RetrieveAll(db)
-	id := todoArr[1].ID.String()
+	//id := todoArr[1].ID.String()
 	//id := idu.String()
 
 	//fmt.Println("Input status: ")
@@ -55,8 +55,8 @@ func main() {
 
 		fmt.Println("STATUS = ", updatedTodo)
 	*/
-	payment, _ := SelectPaymentWIthId(db, id)
-	fmt.Println("Your payment is", payment)
+	//payment, _ := SelectPaymentWIthId(db, id)
+	//fmt.Println("Your payment is", payment)
 
 	// delete a payment with previous id
 	//DeleteTodo(db, id)
@@ -64,7 +64,7 @@ func main() {
 
 	// handler function #1 - returns the index.html template, with film data
 	h1 := func(w http.ResponseWriter, r *http.Request) {
-		tmpl := template.Must(template.ParseFiles("index.html"))
+		tmpl := template.Must(template.ParseFiles("static/index.html"))
 		films := map[string][]Todo{
 			"Todos": todoArr,
 		}
@@ -75,13 +75,13 @@ func main() {
 	h2 := func(w http.ResponseWriter, r *http.Request) {
 		title := r.PostFormValue("title")
 		director := r.PostFormValue("director")
-		// htmlStr := fmt.Sprintf("<li class='list-group-item bg-primary text-white'>%s - %s</li>", title, director)
-		// tmpl, _ := template.New("t").Parse(htmlStr)
-		tmpl := template.Must(template.ParseFiles("index.html"))
+		//htmlStr := fmt.Sprintf("<li class='list-group-item bg-primary text-white'>%s - %s</li>", title, director)
+		//tmpl, _ := template.New("t").Parse(htmlStr)
+		tmpl := template.Must(template.ParseFiles("static/index.html"))
 		new_todo := Todo{Title: title, Description: director, Status: "Not_Complete"}
-		add_todo, _ := CreateTodo(db, new_todo)
-		println("lines modified: ", add_todo)
-		tmpl.ExecuteTemplate(w, "film-list-element", new_todo)
+		add_todo := CreateTodo(db, new_todo)
+		returned_todo, _ := SelectTodoByID(db, add_todo.String())
+		tmpl.ExecuteTemplate(w, "film-list-element", returned_todo)
 	}
 
 	fileserver := http.FileServer(http.Dir("./static"))

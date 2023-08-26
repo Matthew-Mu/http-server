@@ -49,12 +49,12 @@ func Setup() (*gorm.DB, error) {
 	return db, nil
 }
 
-func CreateTodo(db *gorm.DB, todo Todo) (int64, error) {
+func CreateTodo(db *gorm.DB, todo Todo) uuid.UUID {
+
 	result := db.Create(&todo)
-	if result.RowsAffected == 0 {
-		return 0, errors.New("todo not created")
-	}
-	return result.RowsAffected, nil
+	fmt.Println(result.Row())
+	return todo.ID
+
 }
 
 func RetrieveAll(db *gorm.DB) []Todo {
@@ -68,7 +68,7 @@ func RetrieveAll(db *gorm.DB) []Todo {
 
 }
 
-func SelectPaymentWIthId(db *gorm.DB, id string) (Todo, error) {
+func SelectTodoByID(db *gorm.DB, id string) (Todo, error) {
 
 	var todos []Todo
 	db.Find(&todos)
