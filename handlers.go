@@ -41,10 +41,6 @@ func TemplateHandler(w http.ResponseWriter, r *http.Request, todo_list []Todo) {
 
 }
 
-func deleteHandler(w http.ResponseWriter, r *http.Request) {
-
-}
-
 // handler function #2 - returns the template block with the newly added film, as an HTMX response
 func h2(db *gorm.DB) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
@@ -69,5 +65,19 @@ func h1(db *gorm.DB) http.HandlerFunc {
 			"Todos": todoArr,
 		}
 		tmpl.Execute(w, films)
+	}
+}
+
+func deleteHandler(db *gorm.DB) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		id := r.PostFormValue("id")
+		DeleteTodo(db, id)
+
+		todoArr := RetrieveAll(db)
+		tmpl := template.Must(template.ParseFiles("static/index.html"))
+		todos := map[string][]Todo{
+			"Todos": todoArr,
+		}
+		tmpl.ExecuteTemplate(w, "film-list-element", todos)
 	}
 }

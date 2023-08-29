@@ -42,14 +42,16 @@
                     Submit
                 </button>
             </form>
-            <form hx-post="/delete-todo" hx-indicator="#spinner">
+            <form hx-post="/delete-todo" hx-target="#film-list" hx-swap="beforeend" hx-indicator="#spinner">
+                <div>
                     <label for="todo-id">ID</label>
-                    <input type="text" name="title" id="todo-id" class="form-control" />
+                    <input type="text" name="id" id="todo-id" class="form-control" />
+                </div>
             <button type="submit" class="btn btn-primary">Delete</button>
 
         </div>
 
-    </div>
+        </div>
 
 </body>
 </html>

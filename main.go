@@ -69,6 +69,7 @@ func main() {
 	http.HandleFunc("/hello", helloHandler)
 	http.HandleFunc("/template", h1(db))
 	http.HandleFunc("/add-film/", h2(db))
+	http.HandleFunc("/delete-todo", deleteHandler(db))
 
 	fmt.Printf("Starting server at port 8080\n")
 	if err := http.ListenAndServe(":8080", nil); err != nil {
