@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"gorm.io/gorm"
 	"html/template"
 	"net/http"
 )
@@ -38,4 +39,35 @@ func TemplateHandler(w http.ResponseWriter, r *http.Request, todo_list []Todo) {
 	println("accessing template")
 	tmpl.Execute(w, todos)
 
+}
+
+func deleteHandler(w http.ResponseWriter, r *http.Request) {
+
+}
+
+// handler function #2 - returns the template block with the newly added film, as an HTMX response
+func h2(db *gorm.DB) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		title := r.PostFormValue("title")
+		director := r.PostFormValue("director")
+		//htmlStr := fmt.Sprintf("<li class='list-group-item bg-primary text-white'>%s - %s</li>", title, director)
+		//tmpl, _ := template.New("t").Parse(htmlStr)
+		tmpl := template.Must(template.ParseFiles("static/index.html"))
+		new_todo := Todo{Title: title, Description: director, Status: "Not_Complete"}
+		add_todo := CreateTodo(db, new_todo)
+		returned_todo, _ := SelectTodoByID(db, add_todo.String())
+		tmpl.ExecuteTemplate(w, "film-list-element", returned_todo)
+	}
+
+}
+
+func h1(db *gorm.DB) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		todoArr := RetrieveAll(db)
+		tmpl := template.Must(template.ParseFiles("static/index.html"))
+		films := map[string][]Todo{
+			"Todos": todoArr,
+		}
+		tmpl.Execute(w, films)
+	}
 }
