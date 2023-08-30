@@ -62,7 +62,7 @@ func RetrieveAll(db *gorm.DB) []Todo {
 	var todos []Todo
 	db.Find(&todos)
 	for i := 0; i < len(todos); i++ {
-		fmt.Println("Todo Array:", todos[i])
+		fmt.Println("Todo: ", todos[i])
 	}
 	return todos
 

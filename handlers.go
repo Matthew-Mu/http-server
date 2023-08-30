@@ -78,6 +78,7 @@ func deleteHandler(db *gorm.DB) http.HandlerFunc {
 		todos := map[string][]Todo{
 			"Todos": todoArr,
 		}
+		fmt.Println(todos)
 		tmpl.ExecuteTemplate(w, "film-list-element", todos)
 	}
 }

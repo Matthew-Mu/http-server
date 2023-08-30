@@ -16,9 +16,11 @@
             <h1 class="mb-4">Film List</h1>
         
             <ul class="list-group fs-5 me-5" id="film-list">
+                {{ block "todo-arr-element" .}}
                 {{ range .Todos}}
                 {{ block "film-list-element" .}}
                 <li class="list-group-item bg-primary text-white">{{ .ID }}{{ .Title }} - {{ .Description }} - {{ .Status }}</li>
+                {{ end }}
                 {{ end }}
                 {{ end }}
             </ul>
@@ -42,7 +44,7 @@
                     Submit
                 </button>
             </form>
-            <form hx-post="/delete-todo" hx-target="#film-list" hx-swap="beforeend" hx-indicator="#spinner">
+            <form hx-post="/delete-todo" hx-target="#film-list" hx-swap="outerHTML" hx-indicator="#spinner">
                 <div>
                     <label for="todo-id">ID</label>
                     <input type="text" name="id" id="todo-id" class="form-control" />
