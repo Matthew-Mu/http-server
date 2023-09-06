@@ -16,18 +16,16 @@
             <h1 class="mb-4">Film List</h1>
         
             <ul class="list-group fs-5 me-5" id="film-list">
-                {{ block "todo-arr-element" .}}
                 {{ range .Todos}}
                 {{ block "film-list-element" .}}
-                <li class="list-group-item bg-primary text-white">{{ .ID }}{{ .Title }} - {{ .Description }} - {{ .Status }}</li>
-                {{ end }}
+                <li class="list-group-item bg-primary text-white">{{ .ID }} - {{ .Title }} - {{ .Description }} - {{ .Status }}</li>
                 {{ end }}
                 {{ end }}
             </ul>
         </div>
 
         <div class="col-4">
-            <h1 class="mb-4">Add Film</h1>
+            <h1 class="mb-4">Add Todo</h1>
 
             <form hx-post="/add-film/" hx-target="#film-list" hx-swap="beforeend" hx-indicator="#spinner">
                 <div class="mb-2">
