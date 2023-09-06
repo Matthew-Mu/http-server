@@ -44,7 +44,7 @@
                     Submit
                 </button>
             </form>
-            <form hx-post="/delete-todo" hx-target="#film-list" hx-swap="outerHTML" hx-indicator="#spinner">
+            <form hx-post="/delete-todo" hx-target="#film-list" hx-swap="innerHTML" hx-select="#film-list" hx-indicator="#spinner">
                 <div>
                     <label for="todo-id">ID</label>
                     <input type="text" name="id" id="todo-id" class="form-control" />
