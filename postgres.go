@@ -84,11 +84,13 @@ func SelectTodoByID(db *gorm.DB, id string) (Todo, error) {
 	return todo, nil
 }
 
-func UpdateTodo(db *gorm.DB, id string, todo Todo) (Todo, error) {
+func UpdateTodo(db *gorm.DB, id string) (Todo, error) {
 	var updateTodo Todo
+    todo, _ := SelectTodoByID(db, id)
+    todo.Status= "Complete"
 	result := db.Model(&updateTodo).Where("id = ?", id).Updates(todo)
 	if result.RowsAffected == 0 {
-		return Todo{}, errors.New("payment data not update")
+		return Todo{}, errors.New("payment data not updated")
 	}
 	return updateTodo, nil
 }

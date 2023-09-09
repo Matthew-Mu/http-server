@@ -74,7 +74,7 @@ func deleteHandler(db *gorm.DB) http.HandlerFunc {
 		DeleteTodo(db, id)
 
 		todoArr := RetrieveAll(db)
-		tmpl := template.Must(template.ParseFiles("static/index.html"))
+		tmpl := template.Must(template.ParseFiles("static/film-list-tmpl.html"))
 		todos := map[string][]Todo{
 			"Todos": todoArr,
 		}
@@ -82,3 +82,19 @@ func deleteHandler(db *gorm.DB) http.HandlerFunc {
 		tmpl.Execute(w, todos)
 	}
 }
+
+func updateHandler(db *gorm.DB) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		id := r.PostFormValue("id")
+		UpdateTodo(db, id)
+
+		todoArr := RetrieveAll(db)
+		tmpl := template.Must(template.ParseFiles("static/film-list-tmpl.html"))
+		todos := map[string][]Todo{
+			"Todos": todoArr,
+		}
+		fmt.Println(todos)
+		tmpl.Execute(w, todos)
+	}
+}
+

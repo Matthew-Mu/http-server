@@ -6,10 +6,6 @@ import (
 	"net/http"
 )
 
-type Film struct {
-	Title    string
-	Director string
-}
 
 func main() {
 	//connect to postgresql
@@ -23,6 +19,7 @@ func main() {
 	db.Exec("CREATE EXTENSION IF NOT EXISTS \"uuid-ossp\";")
 	db.AutoMigrate(Todo{})
 	fmt.Println("Migrated")
+
 	/*
 		todo := Todo{
 			Title:       "test HTMX integration",
@@ -62,14 +59,15 @@ func main() {
 
 	// handler function #1 - returns the index.html template, with film data
 
-	fileserver := http.FileServer(http.Dir("./static"))
+	//fileserver := http.FileServer(http.Dir("./static"))
 
-	http.Handle("/", fileserver)
+	//http.Handle("/", fileserver)
 	http.HandleFunc("/form", formHandler)
 	http.HandleFunc("/hello", helloHandler)
-	http.HandleFunc("/template", h1(db))
+	http.HandleFunc("/", h1(db))
 	http.HandleFunc("/add-film/", h2(db))
 	http.HandleFunc("/delete-todo", deleteHandler(db))
+	http.HandleFunc("/update-todo", updateHandler(db))
 
 	fmt.Printf("Starting server at port 8080\n")
 	if err := http.ListenAndServe(":8080", nil); err != nil {

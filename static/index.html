@@ -13,7 +13,7 @@
 
     <div class="row mt-4 g-4">
         <div class="col-8">
-            <h1 class="mb-4">Film List</h1>
+            <h1 class="mb-4">Todo List</h1>
         
             <ul class="list-group fs-5 me-5" id="film-list">
                 {{ range .Todos}}
@@ -42,12 +42,23 @@
                     Submit
                 </button>
             </form>
-            <form hx-post="/delete-todo" hx-target="#film-list" hx-swap="innerHTML" hx-select="#film-list" hx-indicator="#spinner">
+            <h1>Delete Todo</h1>
+            <form hx-post="/delete-todo" hx-target="#film-list" hx-swap="outerHTML" hx-select="#film-list" hx-indicator="#spinner">
                 <div>
                     <label for="todo-id">ID</label>
                     <input type="text" name="id" id="todo-id" class="form-control" />
                 </div>
             <button type="submit" class="btn btn-primary">Delete</button>
+            </form>
+
+            <h1>Update Todo</h1>
+            <form hx-post="/update-todo" hx-target="#film-list" hx-swap="outerHTML" hx-select="#film-list" hx-indicator="#spinner">
+                <div>
+                    <label for="todo-id">ID</label>
+                    <input type="text" name="id" id="todo-id" class="form-control" />
+                </div>
+            <button type="submit" class="btn btn-primary">update</button>
+            </form>
 
         </div>
 
