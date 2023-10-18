@@ -52,7 +52,8 @@ func h2(db *gorm.DB) http.HandlerFunc {
 		new_todo := Todo{Title: title, Description: director, Status: "Not_Complete"}
 		add_todo := CreateTodo(db, new_todo)
 		returned_todo, _ := SelectTodoByID(db, add_todo.String())
-		tmpl.ExecuteTemplate(w, "film-list-element", returned_todo)
+		//tmpl.ExecuteTemplate(w, "film-list-element", returned_todo)
+		tmpl.ExecuteTemplate(w, "to-delete", returned_todo)
 	}
 
 }

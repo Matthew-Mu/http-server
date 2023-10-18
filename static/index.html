@@ -7,9 +7,10 @@
     <title>HTMX & Go - Demo</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
     <script src="https://unpkg.com/htmx.org@1.9.2" integrity="sha384-L6OqL9pRWyyFU3+/bjdSri+iIphTN/bvYyM37tICVyOJkWZLpP2vGn6VUEXgzg6h" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/htmx.org/dist/ext/multi-swap.js"></script>
 
 </head>
-<body class="container">
+<body class="container" hx-ext="multi-swap">
 
     <div class="row mt-4 g-4">
         <div class="col-8">
@@ -42,13 +43,20 @@
                     Submit
                 </button>
             </form>
-            <h1>Delete Todo</h1>
-            <form hx-post="/delete-todo" hx-target="#film-list" hx-swap="outerHTML" hx-select="#film-list" hx-indicator="#spinner">
+
+            <h1 id="delete-id-h1">Delete Todo</h1>
+            <form hx-post="/delete-todo" id="delete-id" hx-swap="multi:#film-list:outerHTML,#todo-delete-id:innerHTML" hx-indicator="#spinner">
                 <div>
-                    <label for="todo-id">ID</label>
-                    <input type="text" name="id" id="todo-id" class="form-control" />
+                    <label for="todo-delete-id">ID</label>
+                    <select name="id" id="todo-delete-id">
+                        {{ range .Todos}}
+                        {{ block "to-delete" .}}
+                        <option class="list-group-item bg-primary text-white" form="todo-delete-id" value="{{.ID}}" name="{{.Description}}">{{ .Description}}</option>
+                        {{ end }}
+                        {{ end }}
+                    </select>
+                    <input type="submit" name="Delete"  class="btn btn-primary"/>
                 </div>
-            <button type="submit" class="btn btn-primary">Delete</button>
             </form>
 
             <h1>Update Todo</h1>
