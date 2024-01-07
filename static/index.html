@@ -28,13 +28,13 @@
         <div class="col-4">
             <h1 class="mb-4">Add Todo</h1>
 
-            <form hx-post="/add-film/" hx-target="#film-list" hx-swap="beforeend" hx-indicator="#spinner">
+            <form hx-post="/add-film/" hx-target="#film-list" hx-swap="multi:#film-list:outerHTML,#todo-delete-id:innerHTML" hx-indicator="#spinner">
                 <div class="mb-2">
                     <label for="film-title">Title</label>
                     <input type="text" name="title" id="film-title" class="form-control" />
                 </div>
                 <div class="mb-3">
-                    <label for="film-director">Director</label>
+                    <label for="film-director">Description</label>
                     <input type="text" name="director" id="film-director" class="form-control" />
                 </div>
 
@@ -60,7 +60,7 @@
             </form>
 
             <h1>Update Todo</h1>
-            <form hx-post="/update-todo" hx-target="#film-list" hx-swap="outerHTML" hx-select="#film-list" hx-indicator="#spinner">
+            <form hx-post="/update-todo" hx-target="#film-list" hx-swap="outerHTML" hx-indicator="#spinner">
                 <div>
                     <label for="todo-id">ID</label>
                     <input type="text" name="id" id="todo-id" class="form-control" />

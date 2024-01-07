@@ -1,6 +1,6 @@
 module Matthew-Mu/http-server
 
-go 1.23
+go 1.21
 
 require (
 	github.com/aws/aws-sdk-go v1.44.326 // indirect

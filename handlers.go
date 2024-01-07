@@ -48,12 +48,21 @@ func h2(db *gorm.DB) http.HandlerFunc {
 		director := r.PostFormValue("director")
 		//htmlStr := fmt.Sprintf("<li class='list-group-item bg-primary text-white'>%s - %s</li>", title, director)
 		//tmpl, _ := template.New("t").Parse(htmlStr)
-		tmpl := template.Must(template.ParseFiles("static/index.html"))
+		tmpl := template.Must(template.ParseFiles("static/film-list-tmpl.html"))
+		//del_tmpl := template.Must(template.ParseFiles("static/delete-tmpl.html"))
 		new_todo := Todo{Title: title, Description: director, Status: "Not_Complete"}
-		add_todo := CreateTodo(db, new_todo)
-		returned_todo, _ := SelectTodoByID(db, add_todo.String())
+		//add_todo := CreateTodo(db, new_todo)
+		CreateTodo(db, new_todo)
+		//returned_todo, _ := SelectTodoByID(db, add_todo.String())
+
+		todoArr := RetrieveAll(db)
+
+		todos := map[string][]Todo{
+			"Todos": todoArr,
+		}
 		//tmpl.ExecuteTemplate(w, "film-list-element", returned_todo)
-		tmpl.ExecuteTemplate(w, "to-delete", returned_todo)
+		//del_tmpl.ExecuteTemplate(w, "to-delete", returned_todo)
+		tmpl.Execute(w, todos)
 	}
 
 }
@@ -90,12 +99,11 @@ func updateHandler(db *gorm.DB) http.HandlerFunc {
 		UpdateTodo(db, id)
 
 		todoArr := RetrieveAll(db)
-		tmpl := template.Must(template.ParseFiles("static/film-list-tmpl.html"))
+		tmpl := template.Must(template.ParseFiles("static/update-tmpl.html"))
 		todos := map[string][]Todo{
 			"Todos": todoArr,
 		}
-		fmt.Println(todos)
+		//fmt.Println(todos)
 		tmpl.Execute(w, todos)
 	}
 }
-
