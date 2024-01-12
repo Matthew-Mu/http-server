@@ -1,0 +1,57 @@
+
+
+<table>
+
+    <th>Date</th>
+    <th>Day</th>
+    <th>TempLow</th>
+    <th>TempHigh</th>
+    <th>Rain</th>
+    <th>Evap</th>
+    <th>Sun</th>
+    <th>WindDir</th>
+    <th>MaxWindSpd</th>
+    <th>Time</th>
+    <th>AMTemp</th>
+    <th>AMRH</th>
+    <th>AMCloud</th>
+    <th>AMWindDir</th>
+    <th>AMMaxWindSpd</th>
+    <th>AMPressure</th>
+    <th>PMTemp</th>
+    <th>PMRH</th>
+    <th>PMCloud</th>
+    <th>PMWindDir</th>
+    <th>PMMaxWindSpd</th>
+    <th>PMPressure</th>
+
+    <tbody>
+        {{range .Weather}}
+        <tr>{{ .Date }}</tr>
+        <tr>{{ .Day }}</tr>
+        <tr>{{ .TempLow }}</tr>
+        <tr>{{ .TempHigh }}</tr>
+        <tr>{{ .Rain }}</tr>
+        <tr>{{ .Evap }}</tr>
+        <tr>{{ .Sun }}</tr>
+        <tr>{{ .WindDir }}</tr>
+        <tr>{{ .MaxWindSpd }}</tr>
+        <tr>{{ .Time }}</tr>
+        <tr>{{ .AMTemp }}</tr>
+        <tr>{{ .AMRH }}</tr>
+        <tr>{{ .AMCloud }}</tr>
+        <tr>{{ .AMWindDir }}</tr>
+        <tr>{{ .AMMaxWindSpd }}</tr>
+        <tr>{{ .AMPressure }}</tr>
+        <tr>{{ .PMTemp}}</tr>
+        <tr>{{ .PMRH }}</tr>
+        <tr>{{ .PMCloud }}</tr>
+        <tr>{{ .PMWindDir }}</tr>
+        <tr>{{ .PMMaxWindSpd}}</tr>
+        <tr>{{ .PMPressure}}</tr>
+        {{end}}
+
+    </tbody>
+</table>
+
+

@@ -8,14 +8,9 @@ import (
 
 func main() {
 	//connect to postgresql
-	db, err := Setup()
-	if err != nil {
-		log.Panic(err)
-		return
-	}
-	fmt.Println("Connected")
+ku
 
-	db.Exec("CREATE EXTENSION IF NOT EXISTS \"uuid-ossp\";")
+	DB.Exec("CREATE EXTENSION IF NOT EXISTS \"uuid-ossp\";")
 	db.AutoMigrate(Todo{})
 	fmt.Println("Migrated")
 

@@ -46,13 +46,15 @@ func Setup() (*gorm.DB, error) {
 	if err != nil {
 		return nil, err
 	}
+	//SqlDB, _ := db.DB()
 	return db, nil
 }
 
 func CreateTodo(db *gorm.DB, todo Todo) uuid.UUID {
 
-	result := db.Create(&todo)
-	fmt.Println(result.Row())
+	db.Create(&todo)
+	//result := db.Create(&todo)
+	//fmt.Println(result.Row())
 	return todo.ID
 
 }
@@ -61,26 +63,27 @@ func RetrieveAll(db *gorm.DB) []Todo {
 
 	var todos []Todo
 	db.Find(&todos)
-	for i := 0; i < len(todos); i++ {
+	/*for i := 0; i < len(todos); i++ {
 		fmt.Println("Todo: ", todos[i])
-	}
+	}*/
 	return todos
 
 }
 
 func SelectTodoByID(db *gorm.DB, id string) (Todo, error) {
 
-	var todos []Todo
+	/*var todos []Todo
 	db.Find(&todos)
 	for i := 0; i < len(todos); i++ {
 		fmt.Println("Todo Array:", todos[i])
-	}
+	}*/
 
 	var todo Todo
 	result := db.First(&todo, "ID = ?", id)
 	if result.RowsAffected == 0 {
 		return Todo{}, errors.New("payment data not found")
 	}
+
 	return todo, nil
 }
 

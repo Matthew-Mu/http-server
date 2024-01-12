@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"gorm.io/gorm"
 	"html/template"
+	"https://github.com/Matthew-Mu/http-server/weather"
 	"net/http"
 )
 
@@ -16,7 +17,7 @@ func helloHandler(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "Method is not supported", http.StatusNotFound)
 		return
 	}
-	fmt.Println("Deez Nuts")
+	//fmt.Println("Deez Nuts")
 }
 
 func formHandler(w http.ResponseWriter, r *http.Request) {
@@ -36,16 +37,26 @@ func TemplateHandler(w http.ResponseWriter, r *http.Request, todo_list []Todo) {
 	todos := map[string][]Todo{
 		"Todos": todo_list,
 	}
-	println("accessing template")
+	//println("accessing template")
 	tmpl.Execute(w, todos)
 
 }
 
-// handler function #2 - returns the template block with the newly added film, as an HTMX response
-func h2(db *gorm.DB) http.HandlerFunc {
+// handler function addHandler - returns the template block with the newly added todo, as an HTMX response
+func addHandler(db *gorm.DB) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		title := r.PostFormValue("title")
+
+		/*		reqDump, err := httputil.DumpRequest(r, true)
+				if err != nil {
+					log.Fatal(err)
+				}
+
+				fmt.Printf("REQUEST:\n%s", string(reqDump))
+		*/
+		title := r.FormValue("title")
+		//println(title)
 		director := r.PostFormValue("director")
+		//println(director)
 		//htmlStr := fmt.Sprintf("<li class='list-group-item bg-primary text-white'>%s - %s</li>", title, director)
 		//tmpl, _ := template.New("t").Parse(htmlStr)
 		tmpl := template.Must(template.ParseFiles("static/film-list-tmpl.html"))
@@ -71,10 +82,10 @@ func h1(db *gorm.DB) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		todoArr := RetrieveAll(db)
 		tmpl := template.Must(template.ParseFiles("static/index.html"))
-		films := map[string][]Todo{
+		todos := map[string][]Todo{
 			"Todos": todoArr,
 		}
-		tmpl.Execute(w, films)
+		tmpl.Execute(w, todos)
 	}
 }
 
@@ -88,7 +99,7 @@ func deleteHandler(db *gorm.DB) http.HandlerFunc {
 		todos := map[string][]Todo{
 			"Todos": todoArr,
 		}
-		fmt.Println(todos)
+		//fmt.Println(todos)
 		tmpl.Execute(w, todos)
 	}
 }

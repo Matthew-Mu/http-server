@@ -19,7 +19,7 @@
             <ul class="list-group fs-5 me-5" id="film-list">
                 {{ range .Todos}}
                 {{ block "film-list-element" .}}
-                <li class="list-group-item bg-primary text-white">{{ .ID }} - {{ .Title }} - {{ .Description }} - {{ .Status }}</li>
+                <li class="list-group-item bg-primary text-white" id="{{ .ID }}"> Title : {{ .Title }} <br> - {{ .Description }} <br> {{ .Status }}</li>
                 {{ end }}
                 {{ end }}
             </ul>
@@ -28,7 +28,7 @@
         <div class="col-4">
             <h1 class="mb-4">Add Todo</h1>
 
-            <form hx-post="/add-film/" hx-target="#film-list" hx-swap="multi:#film-list:outerHTML,#todo-delete-id:innerHTML" hx-indicator="#spinner">
+            <form hx-post="/add-todo" hx-target="#film-list" hx-swap="multi:#film-list:outerHTML,#todo-delete-id:innerHTML" hx-indicator="#spinner">
                 <div class="mb-2">
                     <label for="film-title">Title</label>
                     <input type="text" name="title" id="film-title" class="form-control" />
