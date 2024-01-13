@@ -8,7 +8,7 @@ import (
 	"os"
 )
 
-type weatherTable struct {
+type Weather struct {
 	Date,
 	Day,
 	TempLow,
@@ -33,9 +33,9 @@ type weatherTable struct {
 	PMPressure string
 }
 
-func fetch() []byte {
+func Fetch() []byte {
 
-	var weatherData []weatherTable
+	var weatherData []Weather
 
 	c := colly.NewCollector()
 
@@ -53,7 +53,7 @@ func fetch() []byte {
 	c.OnHTML("tbody:nth-child(odd)", func(e *colly.HTMLElement) {
 
 		e.ForEach("tr", func(_ int, el *colly.HTMLElement) {
-			weatherTable := weatherTable{
+			weatherTable := Weather{
 				Date:         el.ChildText("th"),
 				Day:          el.ChildText("td:nth-child(2)"),
 				TempLow:      el.ChildText("td:nth-child(3)"),

@@ -1,57 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HTMX & Go - Demo</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+    <script src="https://unpkg.com/htmx.org@1.9.2" integrity="sha384-L6OqL9pRWyyFU3+/bjdSri+iIphTN/bvYyM37tICVyOJkWZLpP2vGn6VUEXgzg6h" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/htmx.org/dist/ext/multi-swap.js"></script>
 
+</head>
+<body class="container" hx-ext="multi-swap">
+<table class="table">
 
-<table>
-
-    <th>Date</th>
-    <th>Day</th>
-    <th>TempLow</th>
-    <th>TempHigh</th>
-    <th>Rain</th>
-    <th>Evap</th>
-    <th>Sun</th>
-    <th>WindDir</th>
-    <th>MaxWindSpd</th>
-    <th>Time</th>
-    <th>AMTemp</th>
-    <th>AMRH</th>
-    <th>AMCloud</th>
-    <th>AMWindDir</th>
-    <th>AMMaxWindSpd</th>
-    <th>AMPressure</th>
-    <th>PMTemp</th>
-    <th>PMRH</th>
-    <th>PMCloud</th>
-    <th>PMWindDir</th>
-    <th>PMMaxWindSpd</th>
-    <th>PMPressure</th>
+    <th scope="col">Date</th>
+    <th scope="col">Day</th>
+    <th scope="col">TempLow</th>
+    <th scope="col">TempHigh</th>
+    <th scope="col">Rain</th>
+    <th scope="col">Evap</th>
+    <th scope="col">Sun</th>
+    <th scope="col">WindDir</th>
+    <th scope="col">MaxWindSpd</th>
+    <th scope="col">Time</th>
+    <th scope="col">AMTemp</th>
+    <th scope="col">AMRH</th>
+    <th scope="col">AMCloud</th>
+    <th scope="col">AMWindDir</th>
+    <th scope="col">AMMaxWindSpd</th>
+    <th scope="col">AMPressure</th>
+    <th scope="col">PMTemp</th>
+    <th scope="col">PMRH</th>
+    <th scope="col">PMCloud</th>
+    <th scope="col">PMWindDir</th>
+    <th scope="col">PMMaxWindSpd</th>
+    <th scope="col">PMPressure</th>
 
     <tbody>
         {{range .Weather}}
-        <tr>{{ .Date }}</tr>
-        <tr>{{ .Day }}</tr>
-        <tr>{{ .TempLow }}</tr>
-        <tr>{{ .TempHigh }}</tr>
-        <tr>{{ .Rain }}</tr>
-        <tr>{{ .Evap }}</tr>
-        <tr>{{ .Sun }}</tr>
-        <tr>{{ .WindDir }}</tr>
-        <tr>{{ .MaxWindSpd }}</tr>
-        <tr>{{ .Time }}</tr>
-        <tr>{{ .AMTemp }}</tr>
-        <tr>{{ .AMRH }}</tr>
-        <tr>{{ .AMCloud }}</tr>
-        <tr>{{ .AMWindDir }}</tr>
-        <tr>{{ .AMMaxWindSpd }}</tr>
-        <tr>{{ .AMPressure }}</tr>
-        <tr>{{ .PMTemp}}</tr>
-        <tr>{{ .PMRH }}</tr>
-        <tr>{{ .PMCloud }}</tr>
-        <tr>{{ .PMWindDir }}</tr>
-        <tr>{{ .PMMaxWindSpd}}</tr>
-        <tr>{{ .PMPressure}}</tr>
+        <tr scope="row">
+
+        <td>{{ .Date }}</td>
+        <td>{{ .Day }}</td>
+        <td>{{ .TempLow }}</td>
+        <td>{{ .TempHigh }}</td>
+        <td>{{ .Rain }}</td>
+        <td>{{ .Evap }}</td>
+        <td>{{ .Sun }}</td>
+        <td>{{ .WindDir }}</td>
+        <td>{{ .MaxWindSpd }}</td>
+        <td>{{ .Time }}</td>
+        <td>{{ .AMTemp }}</td>
+        <td>{{ .AMRH }}</td>
+        <td>{{ .AMCloud }}</td>
+        <td>{{ .AMWindDir }}</td>
+        <td>{{ .AMMaxWindSpd }}</td>
+        <td>{{ .AMPressure }}</td>
+        <td>{{ .PMTemp}}</td>
+        <td>{{ .PMRH }}</td>
+        <td>{{ .PMCloud }}</td>
+        <td>{{ .PMWindDir }}</td>
+        <td>{{ .PMMaxWindSpd}}</td>
+        <td>{{ .PMPressure}}</td>
+        </tr>
         {{end}}
 
     </tbody>
 </table>
-
+</body>
 

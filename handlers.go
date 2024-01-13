@@ -1,12 +1,29 @@
 package main
 
 import (
+	"Matthew-Mu/http-server/weather"
 	"fmt"
 	"gorm.io/gorm"
 	"html/template"
-	"https://github.com/Matthew-Mu/http-server/weather"
 	"net/http"
 )
+
+type Data struct {
+	Todos   []Todo
+	Weather []weather.Weather
+}
+
+func getWeatherHandler(w http.ResponseWriter, r *http.Request) {
+	bytes := weather.Fetch()
+	wTable := weather.ConvertBytesToJson(bytes)
+	tmpl := template.Must(template.ParseFiles("static/table.html"))
+	wthr := map[string][]weather.Weather{
+		"Weather": wTable.Table,
+	}
+
+	tmpl.Execute(w, wthr)
+
+}
 
 func helloHandler(w http.ResponseWriter, r *http.Request) {
 	if r.URL.Path != "/hello" {
@@ -78,14 +95,22 @@ func addHandler(db *gorm.DB) http.HandlerFunc {
 
 }
 
-func h1(db *gorm.DB) http.HandlerFunc {
+func homeHandler(db *gorm.DB) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		todoArr := RetrieveAll(db)
 		tmpl := template.Must(template.ParseFiles("static/index.html"))
-		todos := map[string][]Todo{
-			"Todos": todoArr,
+		var todos = make(map[string][]Todo)
+		todos["Todos"] = todoArr
+		bytes := weather.Fetch()
+		wTable := weather.ConvertBytesToJson(bytes)
+		//tmpl2 := template.Must(template.ParseFiles("static/table.html"))
+		wthr := wTable.Table
+		dataStruct := Data{
+			todoArr,
+			wthr,
 		}
-		tmpl.Execute(w, todos)
+
+		tmpl.Execute(w, dataStruct)
 	}
 }
 

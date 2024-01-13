@@ -63,10 +63,11 @@ func main() {
 	//http.Handle("/", fileserver)
 	http.HandleFunc("/form", formHandler)
 	http.HandleFunc("/hello", helloHandler)
-	http.HandleFunc("/", h1(db))
+	http.HandleFunc("/", homeHandler(db))
 	http.HandleFunc("/add-todo", addHandler(db))
 	http.HandleFunc("/delete-todo", deleteHandler(db))
 	http.HandleFunc("/update-todo", updateHandler(db))
+	http.HandleFunc("/weather", getWeatherHandler)
 
 	fmt.Printf("Starting server at port 8080\n")
 	if err := http.ListenAndServe(":8080", nil); err != nil {
