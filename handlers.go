@@ -79,15 +79,18 @@ func homeHandler(db *gorm.DB) http.HandlerFunc {
 		tmpl := template.Must(template.ParseFiles("static/index.html", "static/table.html", "static/header.html"))
 		var todos = make(map[string][]Todo)
 		todos["Todos"] = todoArr
-		bytes := weather.Fetch()
-		wTable := weather.ConvertBytesToJson(bytes)
-		wthr := wTable.Table
-		dataStruct := Data{
-			todoArr,
-			wthr,
-		}
-		tmpl.ExecuteTemplate(w, "index", dataStruct)
+		tmpl.ExecuteTemplate(w, "index", todos)
 	}
+}
+
+func weatherHandler(w http.ResponseWriter, r *http.Request) {
+	tmpl := template.Must(template.ParseFiles("static/table.html", "static/weather.html", "static/header.html"))
+	bytes := weather.Fetch()
+	wTable := weather.ConvertBytesToJson(bytes)
+	wthr := map[string][]weather.Weather{
+		"Weather": wTable.Table,
+	}
+	tmpl.ExecuteTemplate(w, "weather", wthr)
 }
 
 func deleteHandler(db *gorm.DB) http.HandlerFunc {
@@ -99,7 +102,6 @@ func deleteHandler(db *gorm.DB) http.HandlerFunc {
 		todos := map[string][]Todo{
 			"Todos": todoArr,
 		}
-		//fmt.Println(todos)
 		tmpl.Execute(w, todos)
 	}
 }

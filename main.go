@@ -67,7 +67,7 @@ func main() {
 	http.HandleFunc("/add-todo", addHandler(db))
 	http.HandleFunc("/delete-todo", deleteHandler(db))
 	http.HandleFunc("/update-todo", updateHandler(db))
-	http.HandleFunc("/weather", getWeatherHandler)
+	http.HandleFunc("/weather", weatherHandler)
 
 	fmt.Printf("Starting server at port 8080\n")
 	if err := http.ListenAndServe(":8080", nil); err != nil {
