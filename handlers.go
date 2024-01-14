@@ -13,7 +13,7 @@ type Data struct {
 	Weather []weather.Weather
 }
 
-func getWeatherHandler(w http.ResponseWriter, r *http.Request) {
+func getWeatherTableHandler(w http.ResponseWriter, r *http.Request) {
 	bytes := weather.Fetch()
 	wTable := weather.ConvertBytesToJson(bytes)
 	tmpl := template.Must(template.ParseFiles("static/table.html"))
