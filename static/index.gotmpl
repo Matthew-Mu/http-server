@@ -1,4 +1,3 @@
-{{define "index"}}
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -14,15 +13,11 @@
     <body class="container" hx-ext="multi-swap">
 
         <div class="row mt-4 g-4">
-            {{template "header"}}
-        </div>
-
-        <div class="row mt-4 g-4">
             <div class="col-8">
                 <h1 class="mb-4">Todo List</h1>
 
                 <ul class="list-group fs-5 me-5" id="film-list">
-                    {{ range .Todos }}
+                    {{ range $.Todos }}
                     {{ block "film-list-element" .}}
                     <li class="list-group-item bg-primary text-white" id="{{ .ID }}"> Title : {{ .Title }} <br> - {{ .Description }} <br> {{ .Status }}</li>
                     {{ end }}
@@ -54,7 +49,7 @@
                     <div>
                         <label for="todo-delete-id">ID</label>
                         <select name="id" id="todo-delete-id">
-                            {{ range .Todos}}
+                            {{ range $.Todos}}
                             {{ block "to-delete" .}}
                             <option class="list-group-item bg-primary text-white" form="todo-delete-id" value="{{.ID}}" name="{{.Description}}">{{ .Description}}</option>
                             {{ end }}
@@ -76,10 +71,11 @@
             </div>
 
         </div>
-
-                {{template "WeatherTable" .}}
+        <div class="row mt-4 g-4">
+            {{template "WeatherTable .Weather"}}
+            {{end}}
+        </div>
 
 
     </body>
 </html>
-{{end}}
