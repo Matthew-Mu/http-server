@@ -1,7 +1,0 @@
-                    <select name="id" id="todo-delete-id">
-                        {{ range .Todos}}
-                        {{ block "to-delete" .}}
-                        <option class="list-group-item bg-primary text-white" form="todo-delete-id" value="{{.ID}}" name="{{.Description}}">{{ .Description}}</option>
-                        {{ end }}
-                        {{ end }}
-                    </select>

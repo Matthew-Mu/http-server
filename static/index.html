@@ -41,7 +41,7 @@
                 </form>
 
                 <h1 id="delete-id-h1">Delete Todo</h1>
-                <form hx-post="/delete-todo" id="delete-id" hx-swap="multi:#film-list:outerHTML,#todo-delete-id:innerHTML" hx-indicator="#spinner">
+                <form hx-post="/delete-todo" id="delete-id" hx-swap="multi:#film-list:outerHTML,#todo-delete-id:innerHTML" hx-indicator="#del-spinner">
                     <div>
                         <label for="todo-delete-id">ID</label>
                         <select name="id" id="todo-delete-id">
@@ -51,17 +51,27 @@
                             {{ end }}
                             {{ end }}
                         </select>
-                        <input type="submit" name="Delete"  class="btn btn-primary"/>
+                        <button type="submit" name="Delete"  class="col-4 btn btn-primary">
+                        <span class="spinner-border spinner-border-sm htmx-indicator" id="del-spinner" role="status" aria-hidden="true"></span>Delete
+                        </button>
                     </div>
                 </form>
 
                 <h1>Update Todo</h1>
-                <form hx-post="/update-todo" hx-target="#film-list" hx-swap="outerHTML" hx-indicator="#spinner">
+                <form hx-post="/update-todo" hx-target="#film-list" hx-swap="outerHTML" hx-indicator="#upd-spinner">
                     <div>
                         <label for="todo-id">ID</label>
-                        <input type="text" name="id" id="todo-id" class="form-control" />
+                        <select name="id" id="todo-delete-id">
+                            {{ range .Todos}}
+                            {{ block "to-update" .}}
+                            <option class="list-group-item bg-primary text-white" form="todo-update-id" value="{{.ID}}" name="{{.Description}}">{{ .Description}}</option>
+                            {{ end }}
+                            {{ end }}
+                        </select>
+                        <button type="submit" name="Update"  class="col-4 btn btn-primary">
+                        <span class="spinner-border spinner-border-sm htmx-indicator" id="upd-spinner" role="status" aria-hidden="true"></span>Complete
+                        </button>
                     </div>
-                    <button type="submit" class="btn btn-primary">update</button>
                 </form>
 
             </div>
