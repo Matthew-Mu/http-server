@@ -9,6 +9,12 @@ import (
 	"time"
 )
 
+type Atm struct {
+	Temp     float32
+	Pressure float32
+	Created  time.Time `gorm:"autoCreateTime"`
+}
+
 type Todo struct {
 	ID          uuid.UUID `gorm:"type:uuid;default:uuid_generate_v4();primaryKey;"`
 	Title       string

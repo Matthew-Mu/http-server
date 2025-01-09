@@ -2,11 +2,21 @@ package main
 
 import (
 	"Matthew-Mu/http-server/weather"
+	"encoding/json"
 	"fmt"
-	"gorm.io/gorm"
 	"html/template"
+	"io"
+	"log"
 	"net/http"
+	"os"
+
+	"gorm.io/gorm"
 )
+
+type Environmentals struct {
+	Pressure    string
+	Temperature string
+}
 
 type Data struct {
 	Todos   []Todo
@@ -118,4 +128,30 @@ func updateHandler(db *gorm.DB) http.HandlerFunc {
 		//fmt.Println(todos)
 		tmpl.Execute(w, todos)
 	}
+}
+func enviroHandler(w http.ResponseWriter, r *http.Request) {
+
+	var enviro Environmentals
+	res, err := http.Get("http://Pi5-1/")
+	if err != nil {
+		fmt.Print(err.Error())
+		os.Exit(1)
+	}
+
+	resData, err := io.ReadAll(res.Body)
+	if err != nil {
+		log.Fatal(err)
+		os.Exit(1)
+	}
+	err = json.Unmarshal(resData, &enviro)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	fmt.Println(enviro.Pressure)
+	tmpl := template.Must(template.ParseFiles("static/env.html", "static/index.html", "static/header.html"))
+	/*_ := map[string]Environmentals{
+		"env": enviro,
+	}*/
+	tmpl.ExecuteTemplate(w, "Environmentals", enviro)
 }

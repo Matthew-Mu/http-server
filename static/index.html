@@ -15,7 +15,7 @@
                 <ul class="list-group fs-5 me-5" id="film-list">
                     {{ range .Todos }}
                     {{ block "film-list-element" .}}
-                    <li class="list-group-item bg-primary text-white" id="{{ .ID }}"> Title : {{ .Title }} <br> - {{ .Description }} <br> {{ .Status }}</li>
+                    <li class="list-group-item bg-primary text-white" id="{{ .ID }}"> Title : {{ .Title }} <br><br> Description : <br>{{ .Description }} <br><br> {{ .Status }} <span style="font-size:0.7em">{{.Created}}</span></li>
                     {{ end }}
                     {{ end }}
                 </ul>
