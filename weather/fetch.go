@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"github.com/gocolly/colly/v2"
 	"net/http"
-	"os"
 )
 
 type Weather struct {
@@ -93,6 +92,5 @@ func Fetch() []byte {
 		fmt.Println(err.Error())
 	}
 
-	os.WriteFile("BOMweather.json", content, 0644)
 	return content
 }
